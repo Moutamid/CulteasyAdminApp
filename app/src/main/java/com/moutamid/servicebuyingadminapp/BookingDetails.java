@@ -28,6 +28,7 @@ public class BookingDetails extends AppCompatActivity {
 
     private ActivityBookingDetailsBinding binding;
     private Request model;
+    private String service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +59,10 @@ public class BookingDetails extends AppCompatActivity {
             }
         });
 
+        service = model.getServiceName() + "(" + model.getSubServiceName() + ")";
         binding.phone.setText(model.getPhone());
         binding.location.setText(model.getLocation());
-        binding.service.setText(model.getServiceName() + "(" + model.getSubServiceName() + ")");
+        binding.service.setText(service);
         binding.reason.setText(model.getDescription());
         binding.date.setText(model.getDate() + " " + model.getTime());
 
@@ -81,9 +83,9 @@ public class BookingDetails extends AppCompatActivity {
     private void declineBooking() {
         DatabaseReference db = Constants.databaseReference().child("Requests");
         HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("status","Decline");
+        hashMap.put("status","Declined");
         db.child(model.getId()).updateChildren(hashMap);
-        sendNotification(model.getUserId(),"Request Declined!","Your request has been declined");
+        sendNotification(model.getUserId(),"Request Declined!","Your request of " + service +" has been declined");
         startActivity(new Intent(BookingDetails.this,MainActivity.class));
         finish();
 
@@ -94,7 +96,7 @@ public class BookingDetails extends AppCompatActivity {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status","Accepted");
         db.child(model.getId()).updateChildren(hashMap);
-        sendNotification(model.getUserId(),"Request Accepted!","Your request has been accepted");
+        sendNotification(model.getUserId(),"Request Accepted!","Your request of "+ service + " has been accepted");
         startActivity(new Intent(BookingDetails.this,MainActivity.class));
         finish();
     }

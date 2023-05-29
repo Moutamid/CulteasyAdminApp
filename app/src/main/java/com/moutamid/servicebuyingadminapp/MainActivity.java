@@ -19,6 +19,8 @@ import com.moutamid.servicebuyingadminapp.model.Request;
 import com.moutamid.servicebuyingadminapp.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                         Request model = ds.getValue(Request.class);
                         requestArrayList.add(model);
                     }
-
+                    Collections.reverse(requestArrayList);
                     BookingListAdapter adapter = new BookingListAdapter(MainActivity.this,requestArrayList);
                     binding.recyclerview.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -84,4 +86,11 @@ public class MainActivity extends AppCompatActivity {
         Token uToken = new Token(token);
         db.child("admin").setValue(uToken);
     }*/
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
