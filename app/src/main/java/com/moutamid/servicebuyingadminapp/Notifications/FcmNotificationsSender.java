@@ -40,8 +40,6 @@ public class FcmNotificationsSender {
     }
 
     public void SendNotifications() {
-       // if (Stash.getBoolean(Constants.PAUSE_STATUS, false))
-//            return;
 
         this.requestQueue = Volley.newRequestQueue(this.mActivity);
         JSONObject mainObj = new JSONObject();
