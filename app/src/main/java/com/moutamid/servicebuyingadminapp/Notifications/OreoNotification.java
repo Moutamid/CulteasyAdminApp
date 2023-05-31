@@ -13,11 +13,10 @@ import androidx.annotation.RequiresApi;
 
 import com.moutamid.servicebuyingadminapp.R;
 
-
 public class OreoNotification extends ContextWrapper {
 
-    private static final String CHANNEL_ID = "com.moutamid.culteasy";
-    private static final String CHANNEL_NAME = "culteasy";
+    private static final String CHANNEL_ID = "com.moutamid.miss_caddie";
+    private static final String CHANNEL_NAME = "miss_caddie";
 
     private NotificationManager notificationManager;
 

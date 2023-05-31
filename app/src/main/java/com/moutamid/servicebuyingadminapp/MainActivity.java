@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.moutamid.servicebuyingadminapp.Notifications.Token;
 import com.moutamid.servicebuyingadminapp.adapters.BookingListAdapter;
 import com.moutamid.servicebuyingadminapp.databinding.ActivityMainBinding;
 import com.moutamid.servicebuyingadminapp.model.Request;
@@ -34,9 +35,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         requestArrayList = new ArrayList<>();
         getBookingData();
-        FirebaseMessaging.getInstance().subscribeToTopic("admin");
+     //   FirebaseMessaging.getInstance().subscribeToTopic("admin");
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(!task.isSuccessful()){
+                    System.out.println("Fetching FCM registration token failed ");
+                    return;
+                }
+
+                String token = task.getResult();
+                updatetoken(token);
+                // Toast.makeText(DashBoard.this,token,Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
+    private void updatetoken(String token) {
+
+        DatabaseReference db = Constants.databaseReference().child("Tokens");
+        Token uToken = new Token(token);
+        db.child("admin").setValue(uToken);
+    }
     private void getBookingData() {
         DatabaseReference db = Constants.databaseReference().child("Requests");
        // FirebaseUser user =  Constants.auth().getCurrentUser();
