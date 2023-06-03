@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,14 +51,20 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     public void onBindViewHolder(@NonNull HomeCategoryViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Request model = requestArrayList.get(position);
         holder.serviceTxt.setText(model.getServiceName() + "("+model.getSubServiceName()+")");
-        holder.statusTxt.setText(model.getStatus());
-        if (model.getStatus().equals("Pending")){
-            holder.statusTxt.setTextColor(Color.RED);
-        }else if (model.getStatus().equals("Accepted")){
 
+        if (model.getStatus().equals("Pending")){
+            holder.statusTxt.setText("Service Request Received");
+            holder.statusImg.setImageResource(R.drawable.pending);
+            holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
+        }else if (model.getStatus().equals("Accepted")){
+            holder.statusTxt.setText("Awaiting Payment");
+            holder.statusImg.setImageResource(R.drawable.payment_await);
+           // holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
             holder.statusTxt.setTextColor(mContext.getColor(R.color.purple_700));
         }else {
-            holder.statusTxt.setTextColor(Color.RED);
+            holder.statusTxt.setText("Service Request Canceled");
+            holder.statusImg.setImageResource(R.drawable.cancel);
+            holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
         }
 
         DatabaseReference db = Constants.databaseReference().child("Users").child(model.getUserId());
@@ -104,17 +112,25 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         return requestArrayList.size();
     }
 
-    public class HomeCategoryViewHolder extends RecyclerView.ViewHolder{
+    public class HomeCategoryViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
         public TextView nameTxt,statusTxt,serviceTxt;
-        private ImageView imageView;
+        private ImageView imageView,statusImg;
 
         public HomeCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTxt = itemView.findViewById(R.id.name);
             statusTxt = itemView.findViewById(R.id.status);
             serviceTxt = itemView.findViewById(R.id.service);
+            statusImg = itemView.findViewById(R.id.imageView);
             imageView = itemView.findViewById(R.id.image);
+            itemView.setOnCreateContextMenuListener(this);
+
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            menu.add(Menu.NONE, getAdapterPosition(), Menu.NONE, "Delete");
         }
     }
 }

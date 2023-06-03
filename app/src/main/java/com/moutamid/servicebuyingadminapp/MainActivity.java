@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     private ArrayList<Request> requestArrayList;
+    BookingListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         requestArrayList.add(model);
                     }
                     Collections.reverse(requestArrayList);
-                    BookingListAdapter adapter = new BookingListAdapter(MainActivity.this,requestArrayList);
+                    adapter = new BookingListAdapter(MainActivity.this,requestArrayList);
                     binding.recyclerview.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -84,30 +87,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       /* FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if(!task.isSuccessful()){
-                    System.out.println("Fetching FCM registration token failed ");
-                    return;
-                }
-
-                String token = task.getResult();
-                updatetoken(token);
-                // Toast.makeText(DashBoard.this,token,Toast.LENGTH_LONG).show();
-            }
-        });*/
     }
 
 
-   /* private void updatetoken(String token) {
-        FirebaseUser firebaseUser = Constants.auth().getCurrentUser();
 
-        DatabaseReference db = Constants.databaseReference().child("Tokens");
-        Token uToken = new Token(token);
-        db.child("admin").setValue(uToken);
-    }*/
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getTitle().equals("Delete")){
+            Request request = requestArrayList.get(item.getItemId());
+            DatabaseReference db = Constants.databaseReference().child("Requests");
+            db.child(request.getId()).removeValue();
 
+            requestArrayList.remove(item.getItemId());
+            adapter.notifyItemRemoved(item.getItemId());
+            adapter.notifyItemRangeRemoved(item.getItemId(),requestArrayList.size());
+        }
+        return true;
+    }
 
     @Override
     public void onBackPressed() {

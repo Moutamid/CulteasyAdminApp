@@ -55,22 +55,32 @@
               <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="horizontal">
+                  android:orientation="horizontal"
+                  android:layout_gravity="center"
+                  android:gravity="center_vertical">
 
 
-                  <TextView
+                 <!-- <TextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
                       android:textSize="14sp"
-                      android:text="Status:  "/>
-                  <TextView
-                      android:id="@+id/status"
+                      android:text="Status:  "/>-->
+
+
+                  <ImageView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:textColor="@android:color/holo_red_dark"
-                      android:textSize="14sp"
-                      android:text="Pending"/>
+                      android:src="@drawable/pending"
+                      android:id="@+id/imageView"/>
+
+                  <TextView
+                      android:id="@+id/status"
+                      android:layout_marginLeft="8dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12sp"
+                      android:layout_gravity="center"/>
 
 
               </LinearLayout>
