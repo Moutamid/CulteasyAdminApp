@@ -37,7 +37,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 sendNotification(remoteMessage);
             }
         }else {
-            Toast.makeText(this, "Not available", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "Not available", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +28,7 @@ import com.moutamid.servicebuyingadminapp.model.Users;
 import com.moutamid.servicebuyingadminapp.utils.Constants;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +40,7 @@ public class BookingDetails extends AppCompatActivity {
     private Request model;
     private String service;
     private APIService apiService;
+    private String serverKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class BookingDetails extends AppCompatActivity {
         binding = ActivityBookingDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = getIntent().getParcelableExtra("request");
-
+        serverKey = Stash.getString("serverId");
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
         binding.back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +77,19 @@ public class BookingDetails extends AppCompatActivity {
         binding.phone.setText(model.getPhone());
         binding.location.setText(model.getLocation());
         binding.service.setText(service);
+
         binding.reason.setText(model.getDescription());
         binding.date.setText(model.getDate() + " " + model.getTime());
+
+        if (model.getStatus().equals("Pending")){
+            binding.status.setText("Service Request Received");
+        }else if (model.getStatus().equals("Accepted")){
+            binding.status.setText("Awaiting Payment");
+        }else if (model.getStatus().equals("Declined")){
+            binding.status.setText("Service Request Canceled");
+        }else {
+            binding.status.setText(model.getStatus());
+        }
 
         binding.accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +103,57 @@ public class BookingDetails extends AppCompatActivity {
                 declineBooking();
             }
         });
+        binding.paymentConfirmed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paymentConfirmed();
+            }
+        });
+        binding.serviceConfirmed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceConfirmed();
+            }
+        });
+        binding.serviceCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceCompleted();
+            }
+        });
+    }
+
+    private void serviceCompleted() {
+
+        DatabaseReference db = Constants.databaseReference().child("Requests");
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("status","Service Completed");
+        db.child(model.getId()).updateChildren(hashMap);
+        sendNotification(model.getUserId(),"Service Completed!","Your service has been completed");
+
+        finish();
+    }
+
+    private void serviceConfirmed() {
+
+        DatabaseReference db = Constants.databaseReference().child("Requests");
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("status","Service Confirmed");
+        db.child(model.getId()).updateChildren(hashMap);
+        sendNotification(model.getUserId(),"Service Confirmed!","Your service has been confirmed");
+
+        finish();
+    }
+
+    private void paymentConfirmed() {
+
+        DatabaseReference db = Constants.databaseReference().child("Requests");
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("status","Payment Confirmed");
+        db.child(model.getId()).updateChildren(hashMap);
+        sendNotification(model.getUserId(),"Payment Confirmed!","Your payment has been confirmed");
+
+        finish();
     }
 
     private void declineBooking() {
@@ -96,7 +161,7 @@ public class BookingDetails extends AppCompatActivity {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status","Declined");
         db.child(model.getId()).updateChildren(hashMap);
-        sendNotification(model.getUserId(),"Request Declined!","Your request of " + service +" has been declined");
+        sendNotification(model.getUserId(),"Service Request Canceled!","Your request of " + service +" has been canceled");
 
         finish();
 
@@ -107,7 +172,7 @@ public class BookingDetails extends AppCompatActivity {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status","Accepted");
         db.child(model.getId()).updateChildren(hashMap);
-        sendNotification(model.getUserId(),"Request Accepted!","Your request of "+ service + " has been accepted");
+        sendNotification(model.getUserId(),"Service Request Accepted!","Your request of "+ service + " has been accepted");
 
         finish();
     }
@@ -136,8 +201,10 @@ public class BookingDetails extends AppCompatActivity {
                             title,uId);
 
                     Sender sender = new Sender(data, token.getToken());
-
-                    apiService.sendNotification(sender)
+                    Map<String,String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization","Bearer "+serverKey);
+                    apiService.sendNotification(headers,sender)
                             .enqueue(new Callback<MyResponse>() {
                                 @Override
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
@@ -145,7 +212,7 @@ public class BookingDetails extends AppCompatActivity {
                                         if (response.body().success != 1){
                                             System.out.println("Failed to send notification!");
                                         }
-                                        Toast.makeText(BookingDetails.this, response.message(), Toast.LENGTH_SHORT).show();
+                                      //  Toast.makeText(BookingDetails.this, response.message(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 

@@ -197,36 +197,113 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Accept"
-                android:id="@+id/accept"
-                android:textSize="20sp"
-                android:textAllCaps="false"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:textColor="@color/white"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/purple_700"
-                android:background="@drawable/button_background"/>
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status:  "
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/status"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Decline"
-                android:id="@+id/decline"
-                android:textSize="20sp"
+                android:text="Accept Service Request"
+                android:id="@+id/accept"
+                android:textSize="16sp"
                 android:textAllCaps="false"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:textColor="@color/white"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textAlignment="textStart"
+                android:padding="10dp"
+                android:drawableRight="@drawable/confirm"
+                android:textColor="@color/purple_700"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#ff0000"
-                android:background="@drawable/button_background"/>
+                android:background="@drawable/button_background_outline"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payment Confirmed"
+                android:id="@+id/payment_confirmed"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:drawableRight="@drawable/payment_confirmed"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/purple_700"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_background_outline"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Service Confirmed"
+                android:id="@+id/service_confirmed"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:drawableRight="@drawable/confirm"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/purple_700"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_background_outline"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Service Completed"
+                android:id="@+id/service_completed"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:drawableRight="@drawable/confirm"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/purple_700"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_background_outline"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel Service Request"
+                android:id="@+id/decline"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:drawableRight="@drawable/cancel"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/red"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/cancel_button_background_outline"/>
+
 
 
         </LinearLayout>

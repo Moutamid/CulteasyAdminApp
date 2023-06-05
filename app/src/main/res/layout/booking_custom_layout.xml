@@ -69,17 +69,19 @@
 
 
                   <ImageView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:src="@drawable/pending"
+                      android:layout_width="24dp"
+                      android:layout_height="24dp"
+                      android:layout_gravity="center"
+                      android:src="@drawable/confirm"
                       android:id="@+id/imageView"/>
 
                   <TextView
                       android:id="@+id/status"
-                      android:layout_marginLeft="8dp"
+                      android:layout_marginLeft="5dp"
                       android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
+                      android:layout_height="24dp"
                       android:textSize="12sp"
+                      android:gravity="center"
                       android:layout_gravity="center"/>
 
 

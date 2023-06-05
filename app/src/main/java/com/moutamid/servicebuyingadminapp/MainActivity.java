@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,8 +53,29 @@ public class MainActivity extends AppCompatActivity {
                 // Toast.makeText(DashBoard.this,token,Toast.LENGTH_LONG).show();
             }
         });
+        getServerKey();
 
     }
+
+    private void getServerKey() {
+        DatabaseReference notifyDb = Constants.databaseReference().child("Notification");
+        notifyDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String serverKey = snapshot.child("serverKey").getValue().toString();
+                    Stash.put("serverId",serverKey);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 
     private void updatetoken(String token) {
 

@@ -9,6 +9,5 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Stash.init(this);
-        Stash.put("serverId","AAAAzzvbhX8:APA91bGavDjgYZn9tdcqZCSxPEZtmvOxUSRbNxSrpakLAvMAZ8uZ5pmaqBxo4AVmpued6aKR-Nwkj8pngfV_yhNvdAytaTh_8wuGcZ-ueTYe90LFF_zgwzVXtEyYLQv42JJae9SWdHC9");
     }
 }

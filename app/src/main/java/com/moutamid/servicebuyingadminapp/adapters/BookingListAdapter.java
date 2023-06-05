@@ -54,17 +54,37 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
         if (model.getStatus().equals("Pending")){
             holder.statusTxt.setText("Service Request Received");
-            holder.statusImg.setImageResource(R.drawable.pending);
-            holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
+            holder.statusImg.setImageResource(R.drawable.confirm);
+            holder.statusTxt.setTextColor(mContext.getColor(R.color.purple_700));
         }else if (model.getStatus().equals("Accepted")){
             holder.statusTxt.setText("Awaiting Payment");
             holder.statusImg.setImageResource(R.drawable.payment_await);
            // holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
             holder.statusTxt.setTextColor(mContext.getColor(R.color.purple_700));
-        }else {
+        }
+        else if (model.getStatus().equals("Payment Confirmed")){
+            holder.statusTxt.setText("Payment Received");
+            holder.statusImg.setImageResource(R.drawable.payment_confirmed);
+            // holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
+            holder.statusTxt.setTextColor(mContext.getColor(R.color.purple_700));
+        }
+        else if (model.getStatus().equals("Service Confirmed")){
+            holder.statusTxt.setText("Service Confirmed");
+            holder.statusImg.setImageResource(R.drawable.confirm);
+            // holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
+            holder.statusTxt.setTextColor(mContext.getColor(R.color.purple_700));
+        }
+
+        else if (model.getStatus().equals("Service Completed")){
+            holder.statusTxt.setText("Service Completed");
+            holder.statusImg.setImageResource(R.drawable.confirm);
+            holder.statusTxt.setTextColor(mContext.getColor(R.color.purple_700));
+        }
+
+        else {
             holder.statusTxt.setText("Service Request Canceled");
+             holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
             holder.statusImg.setImageResource(R.drawable.cancel);
-            holder.statusTxt.setTextColor(mContext.getColor(R.color.red));
         }
 
         DatabaseReference db = Constants.databaseReference().child("Users").child(model.getUserId());
