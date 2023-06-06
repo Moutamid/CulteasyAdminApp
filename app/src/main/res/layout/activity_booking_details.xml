@@ -46,7 +46,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:id="@+id/image"
+                android:id="@+id/imageView"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/agriculture"/>
 
@@ -231,7 +231,7 @@
                 android:layout_marginRight="10dp"
                 android:textAlignment="textStart"
                 android:padding="10dp"
-                android:drawableRight="@drawable/confirm"
+                android:drawableRight="@drawable/done_ring_round_svgrepo_com"
                 android:textColor="@color/purple_700"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/button_background_outline"/>
@@ -264,7 +264,7 @@
                 android:layout_marginLeft="10dp"
                 android:padding="10dp"
                 android:textAlignment="textStart"
-                android:drawableRight="@drawable/confirm"
+                android:drawableRight="@drawable/done_ring_round_svgrepo_com"
                 android:layout_marginRight="10dp"
                 android:textColor="@color/purple_700"
                 android:layout_alignParentBottom="true"
@@ -279,7 +279,7 @@
                 android:textAllCaps="false"
                 android:padding="10dp"
                 android:textAlignment="textStart"
-                android:drawableRight="@drawable/confirm"
+                android:drawableRight="@drawable/done_ring_round_svgrepo_com"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -295,7 +295,7 @@
                 android:textSize="16sp"
                 android:padding="10dp"
                 android:textAlignment="textStart"
-                android:drawableRight="@drawable/cancel"
+                android:drawableRight="@drawable/close_svgrepo_com"
                 android:textAllCaps="false"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"

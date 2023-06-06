@@ -81,6 +81,7 @@ public class BookingDetails extends AppCompatActivity {
         binding.reason.setText(model.getDescription());
         binding.date.setText(model.getDate() + " " + model.getTime());
 
+
         if (model.getStatus().equals("Pending")){
             binding.status.setText("Service Request Received");
         }else if (model.getStatus().equals("Accepted")){
@@ -121,6 +122,20 @@ public class BookingDetails extends AppCompatActivity {
                 serviceCompleted();
             }
         });
+
+        if (model.getServiceName().equals("Agriculture Service")) {
+            binding.imageView.setImageResource(R.drawable.agriculture);
+        }else if (model.getServiceName().equals("Horticultural Service")) {
+            binding.imageView.setImageResource(R.drawable.horticulture);
+        }else if (model.getServiceName().equals("Veterinary Service Function")) {
+            binding.imageView.setImageResource(R.drawable.veterinary);
+        }else if (model.getServiceName().equals("Animal Husbandry Service")) {
+            binding.imageView.setImageResource(R.drawable.pets);
+        }else if (model.getServiceName().equals("Commercial Service")) {
+            binding.imageView.setImageResource(R.drawable.market);
+        }else if (model.getServiceName().equals("Domestic Service")) {
+            binding.imageView.setImageResource(R.drawable.domestic);
+        }
     }
 
     private void serviceCompleted() {
